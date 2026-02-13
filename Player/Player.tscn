@@ -1,16 +1,28 @@
-[gd_scene format=3 uid="uid://cnmpjeb27xqed"]
+[gd_scene load_steps=4 format=3 uid="uid://cnmpjeb27xqed"]
 
-[ext_resource type="Script" uid="uid://db0kiii4ndjnm" path="res://Player/player.gd" id="1_3qydi"]
+[ext_resource type="Script" path="res://Player/player.gd" id="1_3qydi"]
+[ext_resource type="PackedScene" uid="uid://csf80yg7slq4l" path="res://UAL1_Standard.glb" id="2_ukjff"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2ndj"]
+radius = 0.35
+height = 1.8
 
-[node name="Player" type="CharacterBody3D" unique_id=999696876 node_paths=PackedStringArray("camera")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("camera", "character_model")]
 script = ExtResource("1_3qydi")
-camera = NodePath("Camera3D")
+camera = NodePath("CameraPivot/Camera3D")
+character_model = NodePath("CharacterModel")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=395995194]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0089537, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_l2ndj")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=742316515]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.422576, 0)
+[node name="CharacterModel" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0)
+
+[node name="UAL1_Standard" parent="CharacterModel" instance=ExtResource("2_ukjff")]
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 3)
